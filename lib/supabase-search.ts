@@ -18,8 +18,8 @@ type ProductRow = {
   tags: string[] | null;
   image: string;
   ai_score: number;
-  rating: number;
-  review_count: number;
+  human_rating: number;
+  human_review_count: number;
   badge: string;
   delivery: string;
   gift_wrap: boolean;
@@ -51,8 +51,8 @@ const normalizeProducts = (rows: ProductRow[]): Product[] =>
     tags: row.tags ?? [],
     image: row.image,
     aiScore: row.ai_score,
-    rating: row.rating,
-    reviewCount: row.review_count,
+    humanRating: row.human_rating,
+    humanReviewCount: row.human_review_count,
     badge: row.badge,
     delivery: row.delivery,
     giftWrap: row.gift_wrap,

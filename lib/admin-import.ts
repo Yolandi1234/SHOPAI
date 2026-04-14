@@ -21,8 +21,8 @@ export type AdminProductInput = {
   tags: string[];
   image: string;
   ai_score: number;
-  rating: number;
-  review_count: number;
+  human_rating: number;
+  human_review_count: number;
   badge: string;
   delivery: string;
   gift_wrap: boolean;
@@ -58,8 +58,8 @@ export const sampleImportPayload: AdminImportPayload = {
     tags: product.tags,
     image: product.image,
     ai_score: product.aiScore,
-    rating: product.rating,
-    review_count: product.reviewCount,
+    human_rating: product.humanRating,
+    human_review_count: product.humanReviewCount,
     badge: product.badge,
     delivery: product.delivery,
     gift_wrap: product.giftWrap,
@@ -103,8 +103,8 @@ const isProduct = (value: unknown): value is AdminProductInput => {
     isStringArray(product.tags) &&
     typeof product.image === "string" &&
     typeof product.ai_score === "number" &&
-    typeof product.rating === "number" &&
-    typeof product.review_count === "number" &&
+    typeof product.human_rating === "number" &&
+    typeof product.human_review_count === "number" &&
     typeof product.badge === "string" &&
     typeof product.delivery === "string" &&
     typeof product.gift_wrap === "boolean" &&

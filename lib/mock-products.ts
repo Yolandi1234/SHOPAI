@@ -24,8 +24,8 @@ export type Product = {
   tags: string[];
   image: string;
   aiScore: number;
-  rating: number;
-  reviewCount: number;
+  humanRating: number;
+  humanReviewCount: number;
   badge: string;
   delivery: string;
   giftWrap: boolean;
@@ -145,8 +145,8 @@ export const baseProducts: Product[] = [
     tags: ["pink", "dress", "fashion", "women", "gift"],
     image: makeSvgDataUrl("Blush Dress", "#ff5ecf", "#695bff"),
     aiScore: 91,
-    rating: 4.7,
-    reviewCount: 182,
+    humanRating: 4.7,
+    humanReviewCount: 182,
     badge: "Top Recommended",
     delivery: "Same-day delivery available",
     giftWrap: true,
@@ -165,8 +165,8 @@ export const baseProducts: Product[] = [
     tags: ["dog", "bed", "large", "pets", "comfort"],
     image: makeSvgDataUrl("Dog Bed", "#54c6ff", "#0b2350"),
     aiScore: 89,
-    rating: 4.8,
-    reviewCount: 324,
+    humanRating: 4.8,
+    humanReviewCount: 324,
     badge: "Comfort Pick",
     delivery: "Next-day courier delivery",
     giftWrap: false,
@@ -185,8 +185,8 @@ export const baseProducts: Product[] = [
     tags: ["gift", "teacher", "box", "stationery"],
     image: makeSvgDataUrl("Gift Box", "#ff92b7", "#f5cb67"),
     aiScore: 98,
-    rating: 4.9,
-    reviewCount: 411,
+    humanRating: 4.9,
+    humanReviewCount: 411,
     badge: "Best Gift Match",
     delivery: "Gift wrapped and delivered today",
     giftWrap: true,
@@ -205,8 +205,8 @@ export const baseProducts: Product[] = [
     tags: ["samsung", "charger", "usb-c", "near me", "tech"],
     image: makeSvgDataUrl("Samsung Charger", "#5fd5ff", "#7138ff"),
     aiScore: 95,
-    rating: 4.6,
-    reviewCount: 205,
+    humanRating: 4.6,
+    humanReviewCount: 205,
     badge: "Near You",
     delivery: "Ready for pickup in 30 minutes",
     giftWrap: false,
@@ -225,8 +225,8 @@ export const baseProducts: Product[] = [
     tags: ["watch", "gift", "pink", "tech", "wearables"],
     image: makeSvgDataUrl("Smartwatch", "#ff7eb6", "#56bfff"),
     aiScore: 87,
-    rating: 4.5,
-    reviewCount: 96,
+    humanRating: 4.5,
+    humanReviewCount: 96,
     badge: "Premium Pick",
     delivery: "Free delivery in 1-2 days",
     giftWrap: true,
@@ -245,8 +245,8 @@ export const baseProducts: Product[] = [
     tags: ["home", "desk", "lamp", "gift"],
     image: makeSvgDataUrl("Desk Lamp", "#182d67", "#5fd5ff"),
     aiScore: 84,
-    rating: 4.4,
-    reviewCount: 73,
+    humanRating: 4.4,
+    humanReviewCount: 73,
     badge: "Home Favorite",
     delivery: "Courier delivery available",
     giftWrap: true,

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { ProductCard } from "@/components/product-card";
 import type { Coordinates, SearchExperience } from "@/lib/mock-products";
 
@@ -102,14 +103,13 @@ export function SearchResultsExperience({
     );
   };
 
-  const { products, topPick, nearbyStores, serviceHighlights, aiSummary, userAreaLabel } =
-    experience;
+  const { products, topPick, nearbyStores, aiSummary, userAreaLabel } = experience;
 
   return (
-    <section className="mt-10 rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(9,18,42,0.8),rgba(4,11,24,0.7))] p-6 shadow-card backdrop-blur-xl sm:p-8">
-      <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+    <section className="mt-8">
+      <div className="flex flex-col gap-4 border-b border-white/10 pb-6 xl:flex-row xl:items-end xl:justify-between">
         <div>
-          <p className="text-sm uppercase tracking-[0.32em] text-cyan-200/70">AI Results</p>
+          <p className="text-sm uppercase tracking-[0.32em] text-cyan-200/70">Search Results</p>
           <h1 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
             {initialQuery ? `Top matches for "${initialQuery}"` : "Trending AI shopping matches"}
           </h1>
@@ -119,14 +119,14 @@ export function SearchResultsExperience({
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
+          <div className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-slate-200">
             {products.length} results surfaced
           </div>
           <button
             type="button"
             onClick={requestLocation}
             disabled={locationState === "locating" || isRefreshing}
-            className="rounded-full border border-cyan-300/25 bg-white/5 px-4 py-3 text-sm font-semibold text-cyan-100 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70"
+            className="rounded-full border border-cyan-300/25 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-cyan-100 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70"
           >
             {locationState === "locating"
               ? "Finding your area..."
@@ -155,9 +155,20 @@ export function SearchResultsExperience({
 
       {topPick ? (
         <div className="mt-8 grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-          <div className="rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-6">
+          <div className="rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-6 backdrop-blur-xl">
             <p className="text-xs uppercase tracking-[0.28em] text-cyan-200/70">Top Recommended</p>
-            <div className="mt-4 flex flex-col gap-5 lg:flex-row lg:items-center">
+            <div className="mt-4 flex flex-col gap-5 lg:flex-row lg:items-start">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.03] lg:w-[18rem]">
+                <Image
+                  src={topPick.image}
+                  alt={topPick.title}
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 to-transparent" />
+              </div>
+
               <div className="flex-1">
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="rounded-full bg-gradient-to-r from-pink-400/20 to-cyan-400/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-100">
@@ -171,17 +182,26 @@ export function SearchResultsExperience({
                 <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-300">
                   {topPick.description}
                 </p>
-                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                <div className="mt-5 grid gap-3 sm:grid-cols-3">
                   <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
                     <div className="text-xs uppercase tracking-[0.24em] text-slate-400">Price</div>
                     <div className="mt-2 text-xl font-semibold text-white">{topPick.price}</div>
                   </div>
                   <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
                     <div className="text-xs uppercase tracking-[0.24em] text-slate-400">
-                      Closest Store
+                      Store
+                    </div>
+                    <div className="mt-2 text-xl font-semibold text-white">{topPick.store}</div>
+                  </div>
+                  <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                    <div className="text-xs uppercase tracking-[0.24em] text-slate-400">
+                      Human rating
                     </div>
                     <div className="mt-2 text-xl font-semibold text-white">
-                      {topPick.storeDistance}
+                      {topPick.humanRating.toFixed(1)} / 5
+                    </div>
+                    <div className="mt-1 text-sm text-slate-400">
+                      {topPick.humanReviewCount} verified reviews
                     </div>
                   </div>
                 </div>
@@ -190,38 +210,22 @@ export function SearchResultsExperience({
                     href={topPick.retailerUrl}
                     className="rounded-full bg-[linear-gradient(135deg,rgba(255,79,203,0.95),rgba(95,213,255,0.95))] px-5 py-3 text-sm font-semibold text-slate-950"
                   >
-                    Go To Shop
+                    View Product
                   </a>
                   <a
                     href="#nearby-stores"
                     className="rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white"
                   >
-                    See Nearby Stores
+                    Stores Nearby
                   </a>
                 </div>
-              </div>
-
-              <div className="min-w-0 flex-1 rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
-                <p className="text-xs uppercase tracking-[0.28em] text-cyan-200/70">
-                  Services Available
-                </p>
-                <ul className="mt-4 space-y-3 text-sm text-slate-300">
-                  {serviceHighlights.map((item) => (
-                    <li
-                      key={item}
-                      className="rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
               </div>
             </div>
           </div>
 
           <aside
             id="nearby-stores"
-            className="rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-6"
+            className="rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-6 backdrop-blur-xl"
           >
             <p className="text-xs uppercase tracking-[0.28em] text-cyan-200/70">
               Closest Stores
@@ -244,16 +248,6 @@ export function SearchResultsExperience({
                     </span>
                   </div>
                   <p className="mt-3 text-sm leading-6 text-slate-300">{store.fulfillment}</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {store.services.map((service) => (
-                      <span
-                        key={service}
-                        className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-slate-200"
-                      >
-                        {service}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               ))}
             </div>
